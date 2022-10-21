@@ -64,15 +64,11 @@ export default {
     };
   },
   methods: {
-    // sendRequest(){
-    //   this.$store.dispatch('handleRequest', this.info);
-    // }
     ...mapActions([
         'handleRequest'
     ]),
     sendRequest(){
            this.$store.dispatch('handleRequest', this.info);
-        // this.handleRequest();
     }
   }
 };
