@@ -1,43 +1,39 @@
-export const state = () => ({
-    email: '',
-    password: '',
+export const state =() => ({
+    userInfor: {
+       
+
+    },
     status: ''
 })
 
-export const mutations = () => ({
+export const mutations = {
     changeStatus(state,newState){
         state.status = newState;
+        console.log(state.status);
       },
       changeInfor(state,newInfor){
         if(state.status==='success'){
-           state.email = newInfor.email;
-           state.password = newInfor.password;
+           state.userInfor = newInfor;
+           console.log(state.userInfor);
         }
       }
-})
+}
 
-export const actions = () => ({
-
-       async handleRequest(context,information){
+export const actions = {
+        async handleRequest(context,information){
         //Email: Sincere@april.biz
         //Password: Bret
         try {
-            let result = await axios.get(
-                `https://jsonplaceholder.typicode.com/users?email=${information.email}&username=${information.password}`
-            )
-            if(result.status == 200 && result.data.length >0){
+            const data = await fetch(`https://jsonplaceholder.typicode.com/users?email=${information.email}&username=${information.password}`);
+            const result = await data.json();
+            if(data.status == 200 ){
                 const success = 'success';
-                const newInfor = {
-                    email: result.data[0].email,
-                    password: result.data[0].username
-                }
-                localStorage.setItem("user-info", JSON.stringify(result.data[0]));
+                localStorage.setItem("user-info", JSON.stringify(result));
                 context.commit('changeStatus', success);
-                context.commit('changeInfor', newInfor);
+                context.commit('changeInfor', result[0]);
                 alert('You have successfully logged in');
-                console.log(result.data[0]);
-                console.log(newInfor)
-                console.log(this);
+                console.log(result[0]);
+                console.log(data);
             }
             
         } catch (error) {
@@ -46,4 +42,4 @@ export const actions = () => ({
           console.log(error);   
         }
     }
-})
+}

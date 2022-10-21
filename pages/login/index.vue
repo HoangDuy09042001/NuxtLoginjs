@@ -71,7 +71,8 @@ export default {
         'handleRequest'
     ]),
     sendRequest(){
-        this.handleRequest();
+           this.$store.dispatch('handleRequest', this.info);
+        // this.handleRequest();
     }
   }
 };
